@@ -1,0 +1,7 @@
+{
+    "environment": "dev",
+    "base_url": "https://restful-booker.herokuapp.com",
+    "threads": 50,
+    "ramp_up": 10,
+    "duration": 60
+  }
