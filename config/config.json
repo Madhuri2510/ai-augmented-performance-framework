@@ -1,7 +1,52 @@
 {
-    "environment": "dev",
-    "base_url": "https://restful-booker.herokuapp.com",
-    "threads": 50,
-    "ramp_up": 10,
-    "duration": 60
+  "environment": "dev",
+  "base_url": "https://test.k6.io",
+  "thresholds": {
+    "http_req_failed": ["rate<0.02"],
+    "http_req_duration": ["p(95)<1200", "avg<700"]
+  },
+  "slo": {
+    "p95_ms": 1200,
+    "error_rate": 0.02
+  },
+  "scenarios": {
+    "smoke": {
+      "vus": 3,
+      "duration": "30s"
+    },
+    "load": {
+      "vus": 20,
+      "duration": "2m"
+    },
+    "stress": {
+      "stages": [
+        { "duration": "1m", "target": 20 },
+        { "duration": "1m", "target": 60 },
+        { "duration": "1m", "target": 100 },
+        { "duration": "1m", "target": 0 }
+      ]
+    },
+    "spike": {
+      "stages": [
+        { "duration": "20s", "target": 10 },
+        { "duration": "20s", "target": 200 },
+        { "duration": "40s", "target": 200 },
+        { "duration": "20s", "target": 10 }
+      ]
+    },
+    "soak": {
+      "vus": 15,
+      "duration": "10m"
+    },
+    "breakpoint": {
+      "stages": [
+        { "duration": "30s", "target": 25 },
+        { "duration": "30s", "target": 50 },
+        { "duration": "30s", "target": 75 },
+        { "duration": "30s", "target": 100 },
+        { "duration": "30s", "target": 125 },
+        { "duration": "30s", "target": 150 }
+      ]
+    }
   }
+}
